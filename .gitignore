@@ -1,0 +1,15 @@
+# Arquivos compilados
+*.com
+*.dll
+*.exe
+*.pdb
+
+# Pastas de compilação
+bin/*
+obj/*
+
+# Outros arquivos e pastas que devem ser ignorados
+*.user
+*.suo
+_ReSharper.*/
+[Tt]est[Rr]esult*/
