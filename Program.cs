@@ -7,26 +7,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Escolha o navegador (1 para Chrome, 2 para Firefox):");
-        string browserChoice = Console.ReadLine();
-        IWebDriver driver;
-        if (browserChoice == "1")
-        {
-            driver = new ChromeDriver();
-        }
-        else if (browserChoice == "2")
-        {
-            driver = new FirefoxDriver();
-        }
-        else
-        {
-            Console.WriteLine("Opção inválida.");
-            return;
-        }
+        IWebDriver driver = new ChromeDriver();
+        driver.Navigate().GoToUrl("https://web.whatsapp.com");
         
-        driver.Navigate().GoToUrl("https://web.whatsapp.com");
-        driver.Navigate().GoToUrl("https://web.whatsapp.com");
-
         Console.WriteLine("Escanear o QR Code e pressione Enter");
         Console.ReadLine();
 
