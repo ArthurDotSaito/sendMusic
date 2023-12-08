@@ -18,9 +18,12 @@ class Program
         
         var contact = driver.FindElement(By.XPath($"//span[@title='{contactName}']"));
         contact.Click();
-
-        string folder = Path.Combine("musics");
-        var musicFiles = Directory.GetFiles(folder, "*.mp3").Select(Path.GetFileNameWithoutExtension).ToArray();
+        
+        string currentDir = Directory.GetCurrentDirectory();
+        string projectDir = Directory.GetParent(currentDir).Parent.Parent.FullName;
+        string musicFolder = Path.Combine(projectDir, "musics");
+        
+        var musicFiles = Directory.GetFiles(musicFolder, "*.txt").Select(Path.GetFileNameWithoutExtension).ToArray();
         
         Console.WriteLine("Escolha uma música para enviar");
         for (int i = 0; i < musicFiles.Length; i++)
@@ -29,7 +32,7 @@ class Program
         }
         int choice = Convert.ToInt32(Console.ReadLine()) - 1;
         string selectedMusic = musicFiles[choice];
-        string lyricsFilePath = Path.Combine(folder, selectedMusic + ".txt");
+        string lyricsFilePath = Path.Combine(musicFolder, selectedMusic + ".txt");
 
         if (File.Exists(lyricsFilePath))
         {
@@ -47,9 +50,11 @@ class Program
     {
         foreach(string line in lyricsLines)
         {
-            var sendBox = driver.FindElement(By.CssSelector("div[data-tab='6']"));
+            var sendBox = driver.FindElement(By.CssSelector("div._3Uu1_"));
             sendBox.SendKeys(line);
-            sendBox.SendKeys(Keys.Enter);
+            
+            var sendButton = driver.FindElement(By.CssSelector("span[data-icon='send']"));
+            sendButton.Click();
             
             Thread.Sleep(1000);
         }
