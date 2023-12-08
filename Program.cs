@@ -15,9 +15,23 @@ class Program
 
         Console.WriteLine("Digite o nome do contato ou grupo:");
         string contactName = Console.ReadLine();
+        
         var contact = driver.FindElement(By.XPath($"//span[@title='{contactName}']"));
         contact.Click();
+
+        string folder = Path.Combine("musics");
+        var musicFiles = Directory.GetFiles(folder, "*.mp3").Select(Path.GetFileNameWithoutExtension).ToArray();
         
-        
+        Console.WriteLine("Escolha uma música para enviar");
+        for (int i = 0; i < musicFiles.Length; i++)
+        {
+            Console.WriteLine($"{i + 1}: {musicFiles[i]}");
+        }
+        int choice = Convert.ToInt32(Console.ReadLine()) - 1;
+        string selectedMusic = musicFiles[choice];
+        string lyricsFilePath = Path.Combine(folder, selectedMusic + ".txt");
+
+
+
     }
 }
