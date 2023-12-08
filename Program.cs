@@ -31,7 +31,27 @@ class Program
         string selectedMusic = musicFiles[choice];
         string lyricsFilePath = Path.Combine(folder, selectedMusic + ".txt");
 
+        if (File.Exists(lyricsFilePath))
+        {
+            string[] lyricsLines = File.ReadAllLines(lyricsFilePath);
+            SendLyricsInParts(driver, lyricsLines);
+        }
+        else
+        {
+            Console.WriteLine("Arquivo de rota não encontrado/Música não encontrada");
+        }
+        driver.Quit();
+    }
 
-
+    static void SendLyricsInParts(IWebDriver driver, string[] lyricsLines)
+    {
+        foreach(string line in lyricsLines)
+        {
+            var sendBox = driver.FindElement(By.CssSelector("div[data-tab='6']"));
+            sendBox.SendKeys(line);
+            sendBox.SendKeys(Keys.Enter);
+            
+            Thread.Sleep(1000);
+        }
     }
 }
